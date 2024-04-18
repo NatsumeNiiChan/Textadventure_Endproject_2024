@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Tilemap
   - Houses
+  - QuestObject
+  - New tag
   layers:
   - Default
   - TransparentFX
