@@ -5,11 +5,18 @@ using TMPro;
 
 public class DialogueManagement : MonoBehaviour
 {
-    public string[] LinesOne;
-    public string[] LinesTwo;
-    public string[] LinesThree;
-    public float TextSpeed;
+    [SerializeField] private string[] linesOne;
+    [SerializeField] private string[] linesTwo;
+    [SerializeField] private string[] linesThree;
+    [SerializeField] private string[] linesFour;
+    [SerializeField] private string[] linesFive;
+    [SerializeField] private string[] linesSix;
+    [SerializeField] private float textSpeed;
+    [SerializeField] private bool isKagiliran;
+    [SerializeField] private bool isIntro;
+    [SerializeField] private bool isKatalusan;
 
+    [SerializeField] private GameObject characterArt;
     private GameObject textBox;
     private TextMeshProUGUI textComponent;
     private StandardMovement movementScript;
@@ -20,6 +27,9 @@ public class DialogueManagement : MonoBehaviour
     private bool textOne = true;
     public bool textTwo;
     public bool textThree;
+    private bool textFour;
+    private bool textFive;
+    private bool textSix;
 
     private void Awake()
     {
@@ -42,7 +52,7 @@ public class DialogueManagement : MonoBehaviour
         {
             if (textOne == true)
             {
-                if (textComponent.text == LinesOne[index])
+                if (textComponent.text == linesOne[index])
                 {
                     NextLine();
                 }
@@ -50,13 +60,13 @@ public class DialogueManagement : MonoBehaviour
                 else
                 {
                     StopAllCoroutines();
-                    textComponent.text = LinesOne[index];
+                    textComponent.text = linesOne[index];
                 }
             }
 
             else if (textTwo == true)
             {
-                if (textComponent.text == LinesTwo[index])
+                if (textComponent.text == linesTwo[index])
                 {
                     NextLine();
                 }
@@ -64,13 +74,13 @@ public class DialogueManagement : MonoBehaviour
                 else
                 {
                     StopAllCoroutines();
-                    textComponent.text = LinesTwo[index];
+                    textComponent.text = linesTwo[index];
                 }
             }
 
             else if (textThree == true)
             {
-                if (textComponent.text == LinesThree[index])
+                if (textComponent.text == linesThree[index])
                 {
                     NextLine();
                 }
@@ -78,7 +88,49 @@ public class DialogueManagement : MonoBehaviour
                 else
                 {
                     StopAllCoroutines();
-                    textComponent.text = LinesThree[index];
+                    textComponent.text = linesThree[index];
+                }
+            }
+
+            else if (textFour == true)
+            {
+                if (textComponent.text == linesFour[index])
+                {
+                    NextLine();
+                }
+
+                else
+                {
+                    StopAllCoroutines();
+                    textComponent.text = linesFour[index];
+                }
+            }
+
+            else if (textFive == true)
+            {
+                if (textComponent.text == linesFive[index])
+                {
+                    NextLine();
+                }
+
+                else
+                {
+                    StopAllCoroutines();
+                    textComponent.text = linesFive[index];
+                }
+            }
+
+            else if (textSix == true)
+            {
+                if (textComponent.text == linesSix[index])
+                {
+                    NextLine();
+                }
+
+                else
+                {
+                    StopAllCoroutines();
+                    textComponent.text = linesSix[index];
                 }
             }
         }
@@ -87,7 +139,9 @@ public class DialogueManagement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         movementScript.enabled = false;
+        movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         textBox.SetActive(true);
+        characterArt.SetActive(true);
         inTrigger = true;
         StartDialogue();
     }
@@ -95,6 +149,7 @@ public class DialogueManagement : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         textBox.SetActive(false);
+        characterArt.SetActive(false);
         inTrigger = false;
     }
 
@@ -108,28 +163,55 @@ public class DialogueManagement : MonoBehaviour
     {
         if (textOne == true)
         {
-            foreach (char c in LinesOne[index].ToCharArray())
+            foreach (char c in linesOne[index].ToCharArray())
             {
                 textComponent.text += c;
-                yield return new WaitForSeconds(TextSpeed);
+                yield return new WaitForSeconds(textSpeed);
             }
         }
 
         else if (textTwo == true)
         {
-            foreach (char c in LinesTwo[index].ToCharArray())
+            foreach (char c in linesTwo[index].ToCharArray())
             {
                 textComponent.text += c;
-                yield return new WaitForSeconds(TextSpeed);
+                yield return new WaitForSeconds(textSpeed);
             }
         }
 
         else if (textThree == true)
         {
-            foreach (char c in LinesThree[index].ToCharArray())
+            foreach (char c in linesThree[index].ToCharArray())
             {
                 textComponent.text += c;
-                yield return new WaitForSeconds(TextSpeed);
+                yield return new WaitForSeconds(textSpeed);
+            }
+        }
+
+        else if (textFour == true)
+        {
+            foreach (char c in linesFour[index].ToCharArray())
+            {
+                textComponent.text += c;
+                yield return new WaitForSeconds(textSpeed);
+            }
+        }
+
+        else if (textFive == true)
+        {
+            foreach (char c in linesFive[index].ToCharArray())
+            {
+                textComponent.text += c;
+                yield return new WaitForSeconds(textSpeed);
+            }
+        }
+
+        else if (textSix == true)
+        {
+            foreach (char c in linesSix[index].ToCharArray())
+            {
+                textComponent.text += c;
+                yield return new WaitForSeconds(textSpeed);
             }
         }
     }
@@ -138,7 +220,7 @@ public class DialogueManagement : MonoBehaviour
     {
         if (textOne == true)
         {
-            if (index < LinesOne.Length - 1)
+            if (index < linesOne.Length - 1)
             {
                 index++;
                 textComponent.text = string.Empty;
@@ -149,16 +231,28 @@ public class DialogueManagement : MonoBehaviour
             {
                 textComponent.ClearMesh();
                 textBox.SetActive(false);
+                characterArt.SetActive(false);
                 movementScript.enabled = true;
-                textOne = false;
-                textTwo = true;
-                questScript.HasQuestStarted = true;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                if (isKagiliran == false)
+                {
+                    textOne = false;
+                    textTwo = true;
+                    questScript.HasQuestStarted = true;
+                }
+
+                if (isIntro == true)
+                {
+                    gameObject.transform.parent.gameObject.SetActive(false);
+                }
             }
         }
 
         else if (textTwo == true)
         {
-            if (index < LinesTwo.Length - 1)
+            if (index < linesTwo.Length - 1)
             {
                 index++;
                 textComponent.text = string.Empty;
@@ -169,13 +263,22 @@ public class DialogueManagement : MonoBehaviour
             {
                 textComponent.ClearMesh();
                 textBox.SetActive(false);
+                characterArt.SetActive(false);
                 movementScript.enabled = true;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                if (isKatalusan == true)
+                {
+                    textTwo = false;
+                    textThree = true;
+                }
             }
         }
 
         else if (textThree == true)
         {
-            if (index < LinesThree.Length - 1)
+            if (index < linesThree.Length - 1)
             {
                 index++;
                 textComponent.text = string.Empty;
@@ -186,7 +289,94 @@ public class DialogueManagement : MonoBehaviour
             {
                 textComponent.ClearMesh();
                 textBox.SetActive(false);
+                characterArt.SetActive(false);
                 movementScript.enabled = true;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                if (isKatalusan == true)
+                {
+                    textThree = false;
+                    textFour = true;
+                }
+            }
+        }
+
+        else if (textFour == true)
+        {
+            if (index < linesFour.Length - 1)
+            {
+                index++;
+                textComponent.text = string.Empty;
+                StartCoroutine(TypeLine());
+            }
+
+            else
+            {
+                textComponent.ClearMesh();
+                textBox.SetActive(false);
+                characterArt.SetActive(false);
+                movementScript.enabled = true;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                if (isKatalusan == true)
+                {
+                    textFour = false;
+                    textFive = true;
+                }
+            }
+        }
+
+        else if (textFive == true)
+        {
+            if (index < linesFive.Length - 1)
+            {
+                index++;
+                textComponent.text = string.Empty;
+                StartCoroutine(TypeLine());
+            }
+
+            else
+            {
+                textComponent.ClearMesh();
+                textBox.SetActive(false);
+                characterArt.SetActive(false);
+                movementScript.enabled = true;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                if (isKatalusan == true)
+                {
+                    textFive = false;
+                    textSix = true;
+                }
+            }
+        }
+
+        else if (textSix == true)
+        {
+            if (index < linesSix.Length - 1)
+            {
+                index++;
+                textComponent.text = string.Empty;
+                StartCoroutine(TypeLine());
+            }
+
+            else
+            {
+                textComponent.ClearMesh();
+                textBox.SetActive(false);
+                characterArt.SetActive(false);
+                movementScript.enabled = true;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                if (isKatalusan == true)
+                {
+                    textSix = false;
+                    textOne = true;
+                }
             }
         }
     }
