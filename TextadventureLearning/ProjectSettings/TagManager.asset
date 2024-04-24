@@ -7,7 +7,14 @@ TagManager:
   - Tilemap
   - Houses
   - QuestObject
-  - New tag
+  - Sowilo
+  - Laguz
+  - Raidho
+  - Kenaz
+  - Hagalaz
+  - Dreampet
+  - Water
+  - Tree
   layers:
   - Default
   - TransparentFX

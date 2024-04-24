@@ -25,8 +25,8 @@ public class DialogueManagement : MonoBehaviour
     private int index;
     private bool inTrigger;
     private bool textOne = true;
-    public bool textTwo;
-    public bool textThree;
+    public bool TextTwo;
+    public bool TextThree;
     private bool textFour;
     private bool textFive;
     private bool textSix;
@@ -64,7 +64,7 @@ public class DialogueManagement : MonoBehaviour
                 }
             }
 
-            else if (textTwo == true)
+            else if (TextTwo == true)
             {
                 if (textComponent.text == linesTwo[index])
                 {
@@ -78,7 +78,7 @@ public class DialogueManagement : MonoBehaviour
                 }
             }
 
-            else if (textThree == true)
+            else if (TextThree == true)
             {
                 if (textComponent.text == linesThree[index])
                 {
@@ -170,7 +170,7 @@ public class DialogueManagement : MonoBehaviour
             }
         }
 
-        else if (textTwo == true)
+        else if (TextTwo == true)
         {
             foreach (char c in linesTwo[index].ToCharArray())
             {
@@ -179,7 +179,7 @@ public class DialogueManagement : MonoBehaviour
             }
         }
 
-        else if (textThree == true)
+        else if (TextThree == true)
         {
             foreach (char c in linesThree[index].ToCharArray())
             {
@@ -239,18 +239,19 @@ public class DialogueManagement : MonoBehaviour
                 if (isKagiliran == false)
                 {
                     textOne = false;
-                    textTwo = true;
+                    TextTwo = true;
                     questScript.HasQuestStarted = true;
                 }
 
                 if (isIntro == true)
                 {
+                    TextTwo = false;
                     gameObject.transform.parent.gameObject.SetActive(false);
                 }
             }
         }
 
-        else if (textTwo == true)
+        else if (TextTwo == true)
         {
             if (index < linesTwo.Length - 1)
             {
@@ -270,13 +271,13 @@ public class DialogueManagement : MonoBehaviour
 
                 if (isKatalusan == true)
                 {
-                    textTwo = false;
-                    textThree = true;
+                    TextTwo = false;
+                    TextThree = true;
                 }
             }
         }
 
-        else if (textThree == true)
+        else if (TextThree == true)
         {
             if (index < linesThree.Length - 1)
             {
@@ -296,7 +297,7 @@ public class DialogueManagement : MonoBehaviour
 
                 if (isKatalusan == true)
                 {
-                    textThree = false;
+                    TextThree = false;
                     textFour = true;
                 }
             }
