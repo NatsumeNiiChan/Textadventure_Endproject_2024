@@ -7,6 +7,8 @@ public class TaskManager : MonoBehaviour
     //[SerializeField] private GameObject uiObject;
 
     public int BookCount;
+    public int DrumCount;
+    public bool QuestDoable;
 
     private QuestHandler questScript;
 

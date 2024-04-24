@@ -7,7 +7,6 @@ public class StartQuestHayop : MonoBehaviour
     public float XCoordinate;
     public float YCoordinate;
 
-    private GameObject interactText;
     private GameObject player;
 
     [SerializeField] private bool inTrigger;
@@ -19,8 +18,6 @@ public class StartQuestHayop : MonoBehaviour
 
     private void Awake()
     {
-        //interactText = GameObject.Find("InteractText");
-
         player = GameObject.Find("Player");
         questScript = FindObjectOfType<QuestHandler>();
     }
@@ -63,7 +60,6 @@ public class StartQuestHayop : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         inTrigger = false;
-        //interactText.SetActive(false);
 
         if (gameObject.tag != "Dreampet" && questScript.HayopQuestCount >= 7)
         {

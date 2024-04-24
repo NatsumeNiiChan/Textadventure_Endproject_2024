@@ -12,10 +12,18 @@ public class QuestHandler : MonoBehaviour
     public int HayopQuestCount;
     public int LupaQuestCount;
     public int TanimQuestCount;
+    public int YariQuestCount;
     public int QuestCount;
 
     public DialogueManagement dialogueScript;
 
+    private AudioSource sound;
+    [SerializeField] private AudioClip doneSound;
+
+    private void Awake()
+    {
+        sound = GameObject.Find("SoundHandler").GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -24,6 +32,8 @@ public class QuestHandler : MonoBehaviour
             QuestCount++;
             PagsuyoQuestCount = 0;
             QuestFinished = true;
+            sound.clip = doneSound;
+            sound.Play();
 
             dialogueScript = GameObject.Find("Pagsuyo").GetComponentInChildren<DialogueManagement>();
             Debug.Log("Found");
@@ -36,6 +46,8 @@ public class QuestHandler : MonoBehaviour
             QuestCount++;
             PanulaanQuestCount = 0;
             QuestFinished = true;
+            sound.clip = doneSound;
+            sound.Play();
 
             dialogueScript = GameObject.Find("Panulaan").GetComponentInChildren<DialogueManagement>();
             dialogueScript.TextTwo = false;
@@ -47,6 +59,8 @@ public class QuestHandler : MonoBehaviour
             QuestCount++;
             LupaQuestCount = 0;
             QuestFinished = true;
+            sound.clip = doneSound;
+            sound.Play();
 
             dialogueScript = GameObject.Find("Lupa").GetComponentInChildren<DialogueManagement>();
             dialogueScript.TextTwo = false;
@@ -58,8 +72,23 @@ public class QuestHandler : MonoBehaviour
             QuestCount++;
             TanimQuestCount = 0;
             QuestFinished = true;
+            sound.clip = doneSound;
+            sound.Play();
 
             dialogueScript = GameObject.Find("Tanim").GetComponentInChildren<DialogueManagement>();
+            dialogueScript.TextTwo = false;
+            dialogueScript.TextThree = true;
+        }
+
+        if (YariQuestCount >= 17)
+        {
+            QuestCount++;
+            YariQuestCount = 0;
+            QuestFinished = true;
+            sound.clip = doneSound;
+            sound.Play();
+
+            dialogueScript = GameObject.Find("Yari").GetComponentInChildren<DialogueManagement>();
             dialogueScript.TextTwo = false;
             dialogueScript.TextThree = true;
         }

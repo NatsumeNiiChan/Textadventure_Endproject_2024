@@ -21,6 +21,7 @@ public class DialogueManagement : MonoBehaviour
     private TextMeshProUGUI textComponent;
     private StandardMovement movementScript;
     private QuestHandler questScript;
+    private TaskManager taskScript;
 
     private int index;
     private bool inTrigger;
@@ -38,6 +39,7 @@ public class DialogueManagement : MonoBehaviour
 
         movementScript = FindObjectOfType<StandardMovement>();
         questScript = FindObjectOfType<QuestHandler>();
+        taskScript = FindObjectOfType<TaskManager>();
     }
 
     private void Start()
@@ -138,6 +140,7 @@ public class DialogueManagement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        movementScript.PlayerAnimator.SetBool("IsMoving", false);
         movementScript.enabled = false;
         movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         textBox.SetActive(true);

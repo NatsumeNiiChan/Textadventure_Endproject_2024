@@ -34,9 +34,9 @@ public class StartQuest : MonoBehaviour
         if (questScript.QuestFinished == true)
         {
             questScript.HasQuestStarted = false;
-            movementScript.enabled = true;
-            uiObject.SetActive(false);
             questDone = true;
+
+            Invoke("UIOff", 1.5f);
         }
     }
 
@@ -49,7 +49,12 @@ public class StartQuest : MonoBehaviour
             questStartable = true;
         }
 
-        if (conditionLess == true)
+        if (taskScript.DrumCount >= 3)
+        {
+            questStartable = true;
+        }
+
+        if (conditionLess == true && questScript.HasQuestStarted == true)
         {
             questStartable = true;
         }
@@ -65,5 +70,11 @@ public class StartQuest : MonoBehaviour
             questScript.QuestFinished = false;
             Destroy(gameObject);
         }
+    }
+
+    private void UIOff()
+    {
+        uiObject.SetActive(false);
+        movementScript.enabled = true;
     }
 }
