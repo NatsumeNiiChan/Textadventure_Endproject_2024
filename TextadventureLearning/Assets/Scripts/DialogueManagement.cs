@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class DialogueManagement : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DialogueManagement : MonoBehaviour
     [SerializeField] private bool isKagiliran;
     [SerializeField] private bool isIntro;
     [SerializeField] private bool isKatalusan;
+    [SerializeField] private bool isDream;
 
     [SerializeField] private GameObject characterArt;
     private GameObject textBox;
@@ -250,6 +252,12 @@ public class DialogueManagement : MonoBehaviour
                 {
                     TextTwo = false;
                     gameObject.transform.parent.gameObject.SetActive(false);
+                }
+
+                if (isDream == true)
+                {
+                    GetComponent<StartQuestHayop>().PetGettable = true;
+                    Destroy(GetComponent<DialogueManagement>());
                 }
             }
         }

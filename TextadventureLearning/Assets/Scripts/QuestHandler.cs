@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuestHandler : MonoBehaviour
 {
@@ -14,15 +15,22 @@ public class QuestHandler : MonoBehaviour
     public int TanimQuestCount;
     public int YariQuestCount;
     public int QuestCount;
+    public bool GotPet;
 
     public DialogueManagement dialogueScript;
+    private StandardMovement movementScript;
 
     private AudioSource sound;
     [SerializeField] private AudioClip doneSound;
 
+    [SerializeField] private GameObject final;
+
     private void Awake()
     {
         sound = GameObject.Find("SoundHandler").GetComponent<AudioSource>();
+        movementScript = FindObjectOfType<StandardMovement>();
+
+        final.SetActive(false);
     }
 
     private void Update()
@@ -91,6 +99,17 @@ public class QuestHandler : MonoBehaviour
             dialogueScript = GameObject.Find("Yari").GetComponentInChildren<DialogueManagement>();
             dialogueScript.TextTwo = false;
             dialogueScript.TextThree = true;
+        }
+
+        if (QuestCount >= 6)
+        {
+            final.SetActive(true);
+
+            if (final.GetComponentInChildren<DialogueManagement>().TextTwo == true)
+            {
+                movementScript.enabled = true;
+                SceneManager.LoadScene(2);
+            }
         }
     }
 }

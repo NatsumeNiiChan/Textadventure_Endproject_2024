@@ -11,6 +11,7 @@ public class HouseEntering : MonoBehaviour
     [SerializeField] private bool inHouse;
     [SerializeField] private bool houseTrigger;
     [SerializeField] private bool inTrigger;
+    public bool isSpaceable;
 
     [SerializeField] private AudioClip houseClip;
     [SerializeField] private AudioClip houseMusic;

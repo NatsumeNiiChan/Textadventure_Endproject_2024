@@ -18,6 +18,8 @@ public class StandardMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
         PlayerAnimator = GetComponentInChildren<Animator>();
+        
+        uiObject.SetActive(false);
     }
 
     private void Update()

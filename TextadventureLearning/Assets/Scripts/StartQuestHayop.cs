@@ -10,7 +10,9 @@ public class StartQuestHayop : MonoBehaviour
     private GameObject player;
 
     [SerializeField] private bool inTrigger;
+    [SerializeField] private bool isAnimal;
     private bool isActively = true;
+    public bool PetGettable;
 
     [SerializeField] private DialogueManagement dialogueScript;
     private QuestHandler questScript;
@@ -24,16 +26,18 @@ public class StartQuestHayop : MonoBehaviour
 
     private void Update()
     {
-        if (inTrigger == true & Input.GetKeyDown(KeyCode.Space) && dialogueScript.TextTwo == true)
+        if (inTrigger == true & Input.GetKeyDown(KeyCode.Space) && dialogueScript.TextTwo == true && isAnimal == false)
         {
             player.transform.position = new Vector2(XCoordinate, YCoordinate);
             inTrigger = false;
         }
 
-        if (inTrigger == true & Input.GetKeyDown(KeyCode.Space) && questScript.HayopQuestCount >= 7)
+        if (inTrigger == true & Input.GetKeyDown(KeyCode.Space) && questScript.HayopQuestCount >= 7 && PetGettable == true)
         {
             player.transform.position = new Vector2(XCoordinate, YCoordinate);
             inTrigger = false;
+            questScript.HayopQuestCount = 0;
+            questScript.GotPet = true;
 
             dialogueScript = GameObject.Find("Hayop").GetComponentInChildren<DialogueManagement>();
             dialogueScript.TextTwo = false;
@@ -61,11 +65,10 @@ public class StartQuestHayop : MonoBehaviour
     {
         inTrigger = false;
 
-        if (gameObject.tag != "Dreampet" && questScript.HayopQuestCount >= 7)
+        if (gameObject.tag != "Dreampet" && questScript.GotPet == true)
         {
             questScript.QuestCount++;
             questScript.HasQuestStarted = false;
-            questScript.HayopQuestCount = 0;
             Destroy(gameObject);
         }
     }

@@ -6,6 +6,7 @@ public class StartQuest : MonoBehaviour
 {
     [SerializeField] private GameObject uiObject;
     [SerializeField] private bool conditionLess;
+    public bool isSpaceable;
 
     private TaskManager taskScript;
     private StandardMovement movementScript;
@@ -46,17 +47,22 @@ public class StartQuest : MonoBehaviour
 
         if (taskScript.BookCount >= 10)
         {
+            taskScript.BookCount = 0;
             questStartable = true;
+            isSpaceable = true;
         }
 
         if (taskScript.DrumCount >= 3)
         {
+            taskScript.DrumCount = 0;
             questStartable = true;
+            isSpaceable = true;
         }
 
         if (conditionLess == true && questScript.HasQuestStarted == true)
         {
             questStartable = true;
+            isSpaceable = true;
         }
     }
 

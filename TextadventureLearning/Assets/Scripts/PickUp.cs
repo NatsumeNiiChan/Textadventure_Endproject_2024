@@ -7,6 +7,7 @@ public class PickUp : MonoBehaviour
     //[SerializeField] private GameObject uiObject;
     public bool IsPickable;
     private TaskManager taskMScript;
+    public bool isSpaceable;
 
     [SerializeField] private bool isBook;
     [SerializeField] private bool isDrum;

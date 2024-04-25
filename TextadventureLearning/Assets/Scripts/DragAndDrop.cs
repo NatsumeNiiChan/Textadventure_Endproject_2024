@@ -20,6 +20,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     public bool Water;
     public bool IsRope;
     public bool Ring;
+    private bool inBook;
 
     public float timer = 0;
     private bool auraFinder;
@@ -28,6 +29,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     private bool inTrigger;
 
     [SerializeField] private AudioClip clip;
+    [SerializeField] private AudioClip loopClip;
     private AudioSource sound;
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -52,6 +54,14 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
             sound.clip = clip;
             sound.Play();
         }
+
+        if (inTrigger == true && inBook == true)
+        {
+            questScript.PanulaanQuestCount++;
+            sound.clip = clip;
+            sound.Play();
+            gameObject.GetComponent<DragAndDrop>().enabled = false;
+        }
     }
 
     private void Awake()
@@ -74,6 +84,8 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                 auraFinder = false;
                 timer = 0;
                 questScript.TanimQuestCount++;
+                sound.clip = clip;
+                sound.Play();
                 collisionObject.GetComponent<PolygonCollider2D>().enabled = false;
                 collisionObject.GetComponent<Image>().enabled = true;
             }
@@ -107,10 +119,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
         if (collision.gameObject.CompareTag(gameObject.tag))
         {
-            questScript.PanulaanQuestCount++;
-            sound.clip = clip;
-            sound.Play();
-            Destroy(gameObject);
+            inBook = true;
         }
 
         if (GoodSoul == true)
@@ -149,7 +158,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         if (collision.gameObject.tag == "Tree")
         {
             auraFinder = true;
-            sound.clip = clip;
+            sound.clip = loopClip;
             sound.loop = true;
             sound.Play();
             collisionObject = collision.gameObject;
@@ -158,6 +167,9 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         if (IsRope == true)
         {
             drumFinder = true;
+            sound.clip = loopClip;
+            sound.loop = true;
+            sound.Play();
             collisionObject = collision.gameObject;
         }
     }
@@ -165,6 +177,11 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     private void OnTriggerExit2D(Collider2D collision)
     {
         inTrigger = false;
+
+        if (collision.gameObject.CompareTag(gameObject.tag))
+        {
+            inBook = false;
+        }
 
         if (BadSoul == true)
         {
@@ -179,7 +196,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         if (collision.gameObject.tag == "Tree")
         {
             auraFinder = false;
-            sound.clip = clip;
+            sound.clip = loopClip;
             sound.loop = false;
             sound.Stop();
         }
@@ -187,6 +204,9 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         if (IsRope == true)
         {
             drumFinder = false;
+            sound.clip = loopClip;
+            sound.loop = false;
+            sound.Stop();
             collisionObject = collision.gameObject;
         }
     }

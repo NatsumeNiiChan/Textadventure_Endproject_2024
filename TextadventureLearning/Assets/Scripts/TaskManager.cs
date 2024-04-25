@@ -11,10 +11,17 @@ public class TaskManager : MonoBehaviour
     public bool QuestDoable;
 
     private QuestHandler questScript;
+    private StandardMovement movementScript;
 
     private void Awake()
     {
         questScript = FindObjectOfType<QuestHandler>();
+        movementScript = GetComponent<StandardMovement>();
+    }
+
+    private void Start()
+    {
+        movementScript.enabled = true;
     }
 
     private void Update()
