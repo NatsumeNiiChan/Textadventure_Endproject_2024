@@ -29,7 +29,10 @@ public class QuestHandler : MonoBehaviour
     {
         sound = GameObject.Find("SoundHandler").GetComponent<AudioSource>();
         movementScript = FindObjectOfType<StandardMovement>();
+    }
 
+    private void Start()
+    {
         final.SetActive(false);
     }
 
@@ -109,6 +112,11 @@ public class QuestHandler : MonoBehaviour
             {
                 movementScript.enabled = true;
                 SceneManager.LoadScene(2);
+            }
+
+            else
+            {
+                return;
             }
         }
     }
