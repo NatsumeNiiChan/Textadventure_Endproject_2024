@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [SerializeField] private Sprite seeds;
+    [SerializeField] private Sprite plant;
+    [SerializeField] private Sprite harvest;
     [SerializeField] private GameObject rope;
     
     private RectTransform rectTrans;
@@ -146,10 +147,24 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
             sound.Play();
         }
 
-        if (Water == true && collision.gameObject.tag == "QuestObject")
+        if (Water == true && collision.gameObject.tag == "QuestObject" && collision.gameObject.GetComponent<DragAndDrop>().Water == false)
         {
+            Sprite growth = collision.gameObject.GetComponent<PlantIdentifier>().Plant;
+            collision.gameObject.GetComponent<Image>().sprite = growth;
+            collision.gameObject.GetComponent<DragAndDrop>().Water = true;
+
+            questScript.Plants++;
+
+            sound.clip = clip;
+            sound.Play();
+        }
+
+        if (questScript.Plants >= 6 && gameObject.tag == "Respawn")
+        {
+            Sprite growth = collision.gameObject.GetComponent<PlantIdentifier>().Harvest;
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            collision.gameObject.GetComponent<Image>().sprite = seeds;
+            collision.gameObject.GetComponent<Image>().sprite = growth;
+
             questScript.LupaQuestCount++;
             sound.clip = clip;
             sound.Play();

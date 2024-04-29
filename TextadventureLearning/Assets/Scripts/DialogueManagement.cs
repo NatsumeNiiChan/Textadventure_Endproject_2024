@@ -17,6 +17,7 @@ public class DialogueManagement : MonoBehaviour
     [SerializeField] private bool isIntro;
     [SerializeField] private bool isKatalusan;
     [SerializeField] private bool isDream;
+    [SerializeField] private bool isLvl2;
 
     [SerializeField] private GameObject characterArt;
     private GameObject textBox;
@@ -68,7 +69,7 @@ public class DialogueManagement : MonoBehaviour
                 }
             }
 
-            else if (TextTwo == true)
+            else if (TextTwo == true && isLvl2 == false)
             {
                 if (textComponent.text == linesTwo[index])
                 {
@@ -145,10 +146,14 @@ public class DialogueManagement : MonoBehaviour
         movementScript.PlayerAnimator.SetBool("IsMoving", false);
         movementScript.enabled = false;
         movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        textBox.SetActive(true);
-        characterArt.SetActive(true);
-        inTrigger = true;
-        StartDialogue();
+
+        if (isLvl2 == false)
+        {
+            textBox.SetActive(true);
+            characterArt.SetActive(true);
+            inTrigger = true;
+            StartDialogue();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -158,7 +163,7 @@ public class DialogueManagement : MonoBehaviour
         inTrigger = false;
     }
 
-    private void StartDialogue()
+    public void StartDialogue()
     {
         index = 0;
         StartCoroutine(TypeLine());
@@ -252,6 +257,7 @@ public class DialogueManagement : MonoBehaviour
                 {
                     TextTwo = false;
                     gameObject.transform.parent.gameObject.SetActive(false);
+                    questScript.HasQuestStarted = false;
                 }
 
                 if (isDream == true)

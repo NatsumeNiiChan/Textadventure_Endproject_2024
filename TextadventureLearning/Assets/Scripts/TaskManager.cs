@@ -10,6 +10,8 @@ public class TaskManager : MonoBehaviour
     public int DrumCount;
     public bool QuestDoable;
 
+    [SerializeField] private bool level2;
+
     private QuestHandler questScript;
     private StandardMovement movementScript;
 
@@ -31,7 +33,7 @@ public class TaskManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (questScript.HasQuestStarted == true && collision.gameObject.tag == "QuestObject")
+        if (questScript.HasQuestStarted == true && collision.gameObject.tag == "QuestObject" && level2 == false)
         {
             collision.gameObject.GetComponent<PickUp>().IsPickable = true;
             //uiObject.SetActive(true);

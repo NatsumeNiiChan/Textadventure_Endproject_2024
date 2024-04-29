@@ -16,14 +16,21 @@ public class QuestHandler : MonoBehaviour
     public int YariQuestCount;
     public int QuestCount;
     public bool GotPet;
+    public int Lvl2Count;
 
-    public DialogueManagement dialogueScript;
+    public int Plants;
+    public bool GotBook;
+
+    public DialogueManagement DialogueScript;
     private StandardMovement movementScript;
 
     private AudioSource sound;
     [SerializeField] private AudioClip doneSound;
 
     [SerializeField] private GameObject final;
+    [SerializeField] private GameObject questUI;
+    [SerializeField] private bool levelOne;
+    public bool LevelTwo;
 
     private void Awake()
     {
@@ -46,10 +53,10 @@ public class QuestHandler : MonoBehaviour
             sound.clip = doneSound;
             sound.Play();
 
-            dialogueScript = GameObject.Find("Pagsuyo").GetComponentInChildren<DialogueManagement>();
+            DialogueScript = GameObject.Find("Pagsuyo").GetComponentInChildren<DialogueManagement>();
             Debug.Log("Found");
-            dialogueScript.TextTwo = false;
-            dialogueScript.TextThree = true;
+            DialogueScript.TextTwo = false;
+            DialogueScript.TextThree = true;
         }
 
         if (PanulaanQuestCount >= 10)
@@ -59,10 +66,11 @@ public class QuestHandler : MonoBehaviour
             QuestFinished = true;
             sound.clip = doneSound;
             sound.Play();
+            GotBook = true;
 
-            dialogueScript = GameObject.Find("Panulaan").GetComponentInChildren<DialogueManagement>();
-            dialogueScript.TextTwo = false;
-            dialogueScript.TextThree = true;
+            DialogueScript = GameObject.Find("Panulaan").GetComponentInChildren<DialogueManagement>();
+            DialogueScript.TextTwo = false;
+            DialogueScript.TextThree = true;
         }
 
         if (LupaQuestCount >= 6)
@@ -73,9 +81,9 @@ public class QuestHandler : MonoBehaviour
             sound.clip = doneSound;
             sound.Play();
 
-            dialogueScript = GameObject.Find("Lupa").GetComponentInChildren<DialogueManagement>();
-            dialogueScript.TextTwo = false;
-            dialogueScript.TextThree = true;
+            DialogueScript = GameObject.Find("Lupa").GetComponentInChildren<DialogueManagement>();
+            DialogueScript.TextTwo = false;
+            DialogueScript.TextThree = true;
         }
 
         if (TanimQuestCount >= 2)
@@ -86,9 +94,9 @@ public class QuestHandler : MonoBehaviour
             sound.clip = doneSound;
             sound.Play();
 
-            dialogueScript = GameObject.Find("Tanim").GetComponentInChildren<DialogueManagement>();
-            dialogueScript.TextTwo = false;
-            dialogueScript.TextThree = true;
+            DialogueScript = GameObject.Find("Tanim").GetComponentInChildren<DialogueManagement>();
+            DialogueScript.TextTwo = false;
+            DialogueScript.TextThree = true;
         }
 
         if (YariQuestCount >= 17)
@@ -99,9 +107,9 @@ public class QuestHandler : MonoBehaviour
             sound.clip = doneSound;
             sound.Play();
 
-            dialogueScript = GameObject.Find("Yari").GetComponentInChildren<DialogueManagement>();
-            dialogueScript.TextTwo = false;
-            dialogueScript.TextThree = true;
+            DialogueScript = GameObject.Find("Yari").GetComponentInChildren<DialogueManagement>();
+            DialogueScript.TextTwo = false;
+            DialogueScript.TextThree = true;
         }
 
         if (QuestCount >= 6)
@@ -111,13 +119,31 @@ public class QuestHandler : MonoBehaviour
             if (final.GetComponentInChildren<DialogueManagement>().TextTwo == true)
             {
                 movementScript.enabled = true;
-                SceneManager.LoadScene(2);
+                
+                if (levelOne == true)
+                {
+                    SceneManager.LoadScene(2);
+                }
+
+                if (LevelTwo == true)
+                {
+                    SceneManager.LoadScene(3);
+                }
             }
 
             else
             {
                 return;
             }
+        }
+
+        if (Lvl2Count >= 5)
+        {
+            questUI.SetActive(false);
+            movementScript.enabled = true;
+            Lvl2Count--;
+            QuestCount++;
+            DialogueScript.StartDialogue();
         }
     }
 }

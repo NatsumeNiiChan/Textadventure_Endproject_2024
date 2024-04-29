@@ -11,6 +11,7 @@ public class StartQuestHayop : MonoBehaviour
 
     [SerializeField] private bool inTrigger;
     [SerializeField] private bool isAnimal;
+    [SerializeField] private GameObject animal;
     private bool isActively = true;
     public bool PetGettable;
 
@@ -34,14 +35,9 @@ public class StartQuestHayop : MonoBehaviour
 
         if (inTrigger == true & Input.GetKeyDown(KeyCode.Space) && questScript.HayopQuestCount >= 7 && PetGettable == true)
         {
-            player.transform.position = new Vector2(XCoordinate, YCoordinate);
-            inTrigger = false;
-            questScript.HayopQuestCount = 0;
-            questScript.GotPet = true;
+            animal.SetActive(true);
 
-            dialogueScript = GameObject.Find("Hayop").GetComponentInChildren<DialogueManagement>();
-            dialogueScript.TextTwo = false;
-            dialogueScript.TextThree = true;
+            Invoke("LeaveDream", 2);
         }
     }
 
@@ -53,11 +49,6 @@ public class StartQuestHayop : MonoBehaviour
         {
             questScript.HayopQuestCount++;
             isActively = false;
-        }
-
-        if (questScript.HayopQuestCount >= 7)
-        {
-            //UI an
         }
     }
 
@@ -71,6 +62,19 @@ public class StartQuestHayop : MonoBehaviour
             questScript.HasQuestStarted = false;
             Destroy(gameObject);
         }
+    }
+
+    private void LeaveDream()
+    {
+        player.transform.position = new Vector2(XCoordinate, YCoordinate);
+        inTrigger = false;
+        questScript.HayopQuestCount = 0;
+        questScript.GotPet = true;
+        animal.SetActive(false);
+
+        dialogueScript = GameObject.Find("Hayop").GetComponentInChildren<DialogueManagement>();
+        dialogueScript.TextTwo = false;
+        dialogueScript.TextThree = true;
     }
 }
 

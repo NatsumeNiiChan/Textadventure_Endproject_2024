@@ -13,11 +13,15 @@ public class StandardMovement : MonoBehaviour
     [SerializeField] private int movementSpeed = 5;
     [SerializeField] private GameObject uiObject;
 
+    private QuestHandler questScript;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
         PlayerAnimator = GetComponentInChildren<Animator>();
+
+        questScript = FindObjectOfType<QuestHandler>();
         
         uiObject.SetActive(false);
     }
@@ -34,7 +38,15 @@ public class StandardMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        uiObject.SetActive(true);
+        if (questScript.HasQuestStarted == true && questScript.LevelTwo == false)
+        {
+            uiObject.SetActive(true);
+        }
+
+        if (collision.gameObject.tag == "Houses")
+        {
+            uiObject.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
