@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: TailTargetStudios
   productName: ReiseNachTalaro
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: fcada9c56d2572d4cb19d951e86c3d13, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -273,7 +273,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: 38c6c3cfa76f2d947bfd9f162bfdcfe3, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

@@ -464,7 +464,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Bist du bereit f\xFCr die finale Umfrage?\n\nWenn du beide Level gespielt
     hast, geh weiter zu diesem Link und f\xFClle die finale Umfrage aus.\nDanke f\xFCrs
-    spielen!\n\nLink"
+    spielen!\n\nhttps://5k8mj1hs7et.typeform.com/to/Pal3pR32"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 54dc60d17149718469456b5bd795d689, type: 2}
   m_sharedMaterial: {fileID: 475796596700350235, guid: 54dc60d17149718469456b5bd795d689, type: 2}
@@ -720,6 +720,7 @@ MonoBehaviour:
   pauseScreen: {fileID: 0}
   surveyScreen: {fileID: 775557417}
   lvl2Screen: {fileID: 1095258771}
+  panulaanBook: {fileID: 0}
   gameMenu: 0
 --- !u!4 &241626292
 Transform:
