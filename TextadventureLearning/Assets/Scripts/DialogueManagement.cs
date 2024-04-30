@@ -166,6 +166,7 @@ public class DialogueManagement : MonoBehaviour
     public void StartDialogue()
     {
         index = 0;
+        characterArt.SetActive(true);
         StartCoroutine(TypeLine());
     }
 

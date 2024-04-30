@@ -29,6 +29,8 @@ public class QuestHandler : MonoBehaviour
 
     [SerializeField] private GameObject final;
     [SerializeField] private GameObject questUI;
+    [SerializeField] private GameObject dialogueUI;
+    //[SerializeField] public GameObject CharacterUI;
     [SerializeField] private bool levelOne;
     public bool LevelTwo;
 
@@ -143,6 +145,8 @@ public class QuestHandler : MonoBehaviour
             movementScript.enabled = true;
             Lvl2Count--;
             QuestCount++;
+            dialogueUI.SetActive(true);
+            //CharacterUI.SetActive(true);
             DialogueScript.StartDialogue();
         }
     }
