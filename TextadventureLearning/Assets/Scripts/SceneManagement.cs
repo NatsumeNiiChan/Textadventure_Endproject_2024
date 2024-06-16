@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneManagement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SceneManagement : MonoBehaviour
     [SerializeField] private GameObject surveyScreen;
     [SerializeField] private GameObject lvl2Screen;
     [SerializeField] private GameObject panulaanBook;
+    [SerializeField] private GameObject button;
 
     [SerializeField] private bool gameMenu;
     private bool level2;
@@ -26,6 +28,13 @@ public class SceneManagement : MonoBehaviour
         {
             pauseScreen.SetActive(true);
         }
+
+        if (questScript.GotBook == true)
+        {
+            //button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            button.GetComponent<Button>().interactable = true;
+            questScript.GotBook = false;
+        }
     }
 
     public void StartLvl1()
@@ -35,15 +44,7 @@ public class SceneManagement : MonoBehaviour
 
     public void StartLvl2()
     {
-        if (level2 == false)
-        {
-            lvl2Screen.SetActive(true);
-        }
-
-        else if (level2 == true)
-        {
-            SceneManager.LoadScene(2);
-        }
+        SceneManager.LoadScene(2);
     }
 
     public void Survey()
@@ -68,10 +69,9 @@ public class SceneManagement : MonoBehaviour
 
     public void PanulaansBook()
     {
-        if (questScript.GotBook == true)
-        {
-            panulaanBook.SetActive(true);
-        }
+        
+        
+        panulaanBook.SetActive(true);
     }
 
     public void BackToMenu()

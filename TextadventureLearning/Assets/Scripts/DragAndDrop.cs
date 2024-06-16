@@ -10,8 +10,8 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     [SerializeField] private Sprite harvest;
     [SerializeField] private GameObject rope;
     
-    private RectTransform rectTrans;
-    private Image image;
+    //private RectTransform rectTrans;
+    //private Image image;
 
     private QuestHandler questScript;
 
@@ -67,8 +67,8 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
     private void Awake()
     {
-        rectTrans = GetComponent<RectTransform>();
-        image = GetComponent<Image>();
+        //rectTrans = GetComponent<RectTransform>();
+        //image = GetComponent<Image>();
 
         questScript = FindObjectOfType<QuestHandler>();
         sound = GameObject.Find("SoundHandler").GetComponent<AudioSource>();

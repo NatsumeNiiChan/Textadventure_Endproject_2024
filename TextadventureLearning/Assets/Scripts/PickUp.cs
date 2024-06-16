@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PickUp : MonoBehaviour
 {
     //[SerializeField] private GameObject uiObject;
+    [SerializeField] private GameObject helpUI;
+    [SerializeField] private Image runeUI;
+    [SerializeField] private string textUI;
+    [SerializeField] private Sprite infoImage;
+    [SerializeField] private string infoText;
     public bool IsPickable;
     private TaskManager taskMScript;
     public bool isSpaceable;
@@ -28,6 +35,9 @@ public class PickUp : MonoBehaviour
             //uiObject.SetActive(false);
             if (isBook == true)
             {
+                helpUI.GetComponentInChildren<TMP_Text>().text = textUI;
+                runeUI.sprite = infoImage;
+                helpUI.SetActive(true);
                 taskMScript.BookCount++;
             }
 
@@ -38,7 +48,13 @@ public class PickUp : MonoBehaviour
 
             sound.clip = clip;
             sound.Play();
-            Destroy(gameObject);
+            Invoke("EndUI", 2f);
         }
+    }
+
+    private void EndUI()
+    {
+        helpUI.SetActive(false);
+        Destroy(gameObject);
     }
 }

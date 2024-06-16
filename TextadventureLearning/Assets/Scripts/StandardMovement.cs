@@ -36,23 +36,23 @@ public class StandardMovement : MonoBehaviour
         SetAnimations(rigidBody.velocity);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (questScript.HasQuestStarted == true && questScript.LevelTwo == false)
-        {
-            uiObject.SetActive(true);
-        }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (questScript.HasQuestStarted == true && questScript.LevelTwo == false)
+    //    {
+    //        uiObject.SetActive(true);
+    //    }
 
-        if (collision.gameObject.tag == "Houses")
-        {
-            uiObject.SetActive(true);
-        }
-    }
+    //    if (collision.gameObject.tag == "Houses")
+    //    {
+    //        uiObject.SetActive(true);
+    //    }
+    //}
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        uiObject.SetActive(false);
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    uiObject.SetActive(false);
+    //}
 
     private void SetAnimations(Vector2 velocity)
     {

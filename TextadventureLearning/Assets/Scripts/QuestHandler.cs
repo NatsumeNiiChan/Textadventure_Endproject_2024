@@ -139,15 +139,12 @@ public class QuestHandler : MonoBehaviour
             }
         }
 
-        if (Lvl2Count >= 5)
-        {
-            questUI.SetActive(false);
-            movementScript.enabled = true;
-            Lvl2Count--;
-            QuestCount++;
-            dialogueUI.SetActive(true);
-            //CharacterUI.SetActive(true);
-            DialogueScript.StartDialogue();
-        }
+        //if (Lvl2Count >= 5)
+        //{
+        //    //questUI.SetActive(false);
+        //    //Lvl2Count--;
+        //    //QuestCount++;
+        //    //CharacterUI.SetActive(true);
+        //}
     }
 }

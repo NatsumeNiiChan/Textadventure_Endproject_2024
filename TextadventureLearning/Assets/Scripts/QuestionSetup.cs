@@ -35,6 +35,7 @@ public class QuestionSetup : MonoBehaviour
         {
             questions = new List<QuestionData>(Resources.LoadAll<QuestionData>("QuestionsPanulaan"));
             questScript.GotBook = true;
+
         }
 
         if (TriggerScript.IsPagsuyo == true)

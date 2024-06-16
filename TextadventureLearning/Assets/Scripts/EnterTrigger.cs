@@ -24,8 +24,23 @@ public class EnterTrigger : MonoBehaviour
     {
         questionScript = FindObjectOfType<QuestionSetup>();
         movementScript = FindObjectOfType<StandardMovement>();
-        dialogueScript = GetComponent<DialogueManagement>();
+        //dialogueScript = GetComponent<DialogueManagement>();
         questScript = FindObjectOfType<QuestHandler>();
+    }
+
+    private void Update()
+    {
+        if (questScript.Lvl2Count >= 5)
+        {
+            questUI.SetActive(false);
+            dialogueScript.enabled = true;
+            Debug.Log("diaOn");
+            questScript.QuestCount++;
+            questScript.Lvl2Count = 0;
+            movementScript.enabled = true;
+            movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,27 +49,41 @@ public class EnterTrigger : MonoBehaviour
         questionScript.TriggerScript = gameObject.GetComponent<EnterTrigger>();
         
         questionScript.GetQuestionAssets();
+        dialogueScript.enabled = true;
 
-        if (dialogueScript.TextTwo == true && questDoable == true)
-        {
-            movementScript.enabled = false;
-            questUI.SetActive(true);
-            questionScript.SelectNewQuestion();
-            questionScript.SetQuestionValues();
-            questionScript.SetAnswerValues();
-            questDoable = false;
-            questScript.DialogueScript = dialogueScript;
-        }
+        //if (dialogueScript.TextTwo == true && questDoable == true)
+        //{
+        //    movementScript.enabled = false;
+        //    questUI.SetActive(true);
+        //    questionScript.SelectNewQuestion();
+        //    questionScript.SetQuestionValues();
+        //    questionScript.SetAnswerValues();
+        //    questDoable = false;
+        //    questScript.DialogueScript = dialogueScript;
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         //uiObject.SetActive(false);
 
-        if (questScript.Lvl2Count >= 4)
-        {
-            dialogueScript.enabled = true;
-            questScript.Lvl2Count = 0;
-        }
+        
+    }
+
+    public void StartQuiz()
+    {
+        questUI.SetActive(true);
+        questionScript.SelectNewQuestion();
+        questionScript.SetQuestionValues();
+        questionScript.SetAnswerValues();
+        questDoable = false;
+        dialogueScript.enabled = false;
+        dialogueScript.TextOne = false;
+        dialogueScript.TextTwo = true;
+        dialogueScript.CharacterArt.SetActive(false);
+        dialogueScript.TextBox.SetActive(false);
+        movementScript.enabled = false;
+
+        Destroy(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.gameObject);
     }
 }

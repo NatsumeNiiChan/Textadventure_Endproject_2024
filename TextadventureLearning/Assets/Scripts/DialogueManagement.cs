@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class DialogueManagement : MonoBehaviour
 {
@@ -19,16 +20,17 @@ public class DialogueManagement : MonoBehaviour
     [SerializeField] private bool isDream;
     [SerializeField] private bool isLvl2;
 
-    [SerializeField] private GameObject characterArt;
-    private GameObject textBox;
+    public GameObject CharacterArt;
+    public GameObject TextBox;
     private TextMeshProUGUI textComponent;
     private StandardMovement movementScript;
     private QuestHandler questScript;
     private TaskManager taskScript;
+    private TriggerUI triggerScript;
 
     private int index;
     private bool inTrigger;
-    private bool textOne = true;
+    public bool TextOne = true;
     public bool TextTwo;
     public bool TextThree;
     private bool textFour;
@@ -38,24 +40,31 @@ public class DialogueManagement : MonoBehaviour
     private void Awake()
     {
         textComponent = GameObject.Find("TextBox").GetComponentInChildren<TextMeshProUGUI>();
-        textBox = GameObject.Find("TextBox");
+        TextBox = GameObject.Find("TextBox");
 
         movementScript = FindObjectOfType<StandardMovement>();
         questScript = FindObjectOfType<QuestHandler>();
         taskScript = FindObjectOfType<TaskManager>();
+        triggerScript = FindObjectOfType<TriggerUI>();
     }
 
     private void Start()
     {
-        textBox.SetActive(false);
+        TextBox.SetActive(false);
         textComponent.text = string.Empty;
     }
 
     private void Update()
     {
+        if (questScript.HayopQuestCount >= 7)
+        {
+            TextOne = false;
+            TextTwo = true;
+        }
+
         if (Input.GetMouseButtonDown(0) && inTrigger == true)
         {
-            if (textOne == true)
+            if (TextOne == true)
             {
                 if (textComponent.text == linesOne[index])
                 {
@@ -149,8 +158,8 @@ public class DialogueManagement : MonoBehaviour
 
         if (isLvl2 == false)
         {
-            textBox.SetActive(true);
-            characterArt.SetActive(true);
+            TextBox.SetActive(true);
+            CharacterArt.SetActive(true);
             inTrigger = true;
             StartDialogue();
         }
@@ -158,21 +167,21 @@ public class DialogueManagement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        textBox.SetActive(false);
-        characterArt.SetActive(false);
+        TextBox.SetActive(false);
+        CharacterArt.SetActive(false);
         inTrigger = false;
     }
 
     public void StartDialogue()
     {
         index = 0;
-        characterArt.SetActive(true);
+        CharacterArt.SetActive(true);
         StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
     {
-        if (textOne == true)
+        if (TextOne == true)
         {
             foreach (char c in linesOne[index].ToCharArray())
             {
@@ -229,7 +238,7 @@ public class DialogueManagement : MonoBehaviour
 
     void NextLine()
     {
-        if (textOne == true)
+        if (TextOne == true)
         {
             if (index < linesOne.Length - 1)
             {
@@ -241,17 +250,23 @@ public class DialogueManagement : MonoBehaviour
             else
             {
                 textComponent.ClearMesh();
-                textBox.SetActive(false);
-                characterArt.SetActive(false);
+                TextBox.SetActive(false);
+                CharacterArt.SetActive(false);
                 movementScript.enabled = true;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
 
                 if (isKagiliran == false)
                 {
-                    textOne = false;
+                    TextOne = false;
                     TextTwo = true;
                     questScript.HasQuestStarted = true;
+
+                    if (questScript.LevelTwo == true)
+                    {
+                        TextOne = true;
+                        TextTwo = false;
+                    }
                 }
 
                 if (isIntro == true)
@@ -261,8 +276,14 @@ public class DialogueManagement : MonoBehaviour
                     questScript.HasQuestStarted = false;
                 }
 
+                if (isKatalusan == true)
+                {
+                    questScript.HasQuestStarted = false;
+                }
+
                 if (isDream == true)
                 {
+                    GetComponent<SpriteRenderer>().sprite = CharacterArt.GetComponent<Image>().sprite;
                     GetComponent<StartQuestHayop>().PetGettable = true;
                     Destroy(GetComponent<DialogueManagement>());
                 }
@@ -281,8 +302,8 @@ public class DialogueManagement : MonoBehaviour
             else
             {
                 textComponent.ClearMesh();
-                textBox.SetActive(false);
-                characterArt.SetActive(false);
+                TextBox.SetActive(false);
+                CharacterArt.SetActive(false);
                 movementScript.enabled = true;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -291,6 +312,14 @@ public class DialogueManagement : MonoBehaviour
                 {
                     TextTwo = false;
                     TextThree = true;
+                }
+
+                if (isDream == true)
+                {
+                    GetComponent<SpriteRenderer>().sprite = CharacterArt.GetComponent<Image>().sprite;
+                    GetComponent<StartQuestHayop>().PetGettable = true;
+                    triggerScript.IsSpacable = true;
+                    Destroy(GetComponent<DialogueManagement>());
                 }
             }
         }
@@ -307,8 +336,8 @@ public class DialogueManagement : MonoBehaviour
             else
             {
                 textComponent.ClearMesh();
-                textBox.SetActive(false);
-                characterArt.SetActive(false);
+                TextBox.SetActive(false);
+                CharacterArt.SetActive(false);
                 movementScript.enabled = true;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -333,8 +362,8 @@ public class DialogueManagement : MonoBehaviour
             else
             {
                 textComponent.ClearMesh();
-                textBox.SetActive(false);
-                characterArt.SetActive(false);
+                TextBox.SetActive(false);
+                CharacterArt.SetActive(false);
                 movementScript.enabled = true;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -359,8 +388,8 @@ public class DialogueManagement : MonoBehaviour
             else
             {
                 textComponent.ClearMesh();
-                textBox.SetActive(false);
-                characterArt.SetActive(false);
+                TextBox.SetActive(false);
+                CharacterArt.SetActive(false);
                 movementScript.enabled = true;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -385,8 +414,8 @@ public class DialogueManagement : MonoBehaviour
             else
             {
                 textComponent.ClearMesh();
-                textBox.SetActive(false);
-                characterArt.SetActive(false);
+                TextBox.SetActive(false);
+                CharacterArt.SetActive(false);
                 movementScript.enabled = true;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                 movementScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -394,7 +423,7 @@ public class DialogueManagement : MonoBehaviour
                 if (isKatalusan == true)
                 {
                     textSix = false;
-                    textOne = true;
+                    TextOne = true;
                 }
             }
         }

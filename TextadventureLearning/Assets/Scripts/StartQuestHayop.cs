@@ -31,6 +31,7 @@ public class StartQuestHayop : MonoBehaviour
         {
             player.transform.position = new Vector2(XCoordinate, YCoordinate);
             inTrigger = false;
+            questScript.HasQuestStarted = false;
         }
 
         if (inTrigger == true & Input.GetKeyDown(KeyCode.Space) && questScript.HayopQuestCount >= 7 && PetGettable == true)
@@ -60,6 +61,7 @@ public class StartQuestHayop : MonoBehaviour
         {
             questScript.QuestCount++;
             questScript.HasQuestStarted = false;
+            questScript.GotPet = false;
             Destroy(gameObject);
         }
     }
