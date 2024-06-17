@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5547a40c4576541bb8cc9d2a8b8d4a, type: 3}
   m_Name: Question 3
   m_EditorClassIdentifier: 
-  Question: "Was erz\xE4hlt eine rot Aura?"
+  Question: "Was erz\xE4hlt eine rote Aura?"
   Answers:
   - Lebenskraft
   - Reichtum
