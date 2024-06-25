@@ -80,7 +80,7 @@ public class EnterTrigger : MonoBehaviour
         dialogueScript.enabled = false;
         dialogueScript.TextOne = false;
         dialogueScript.TextTwo = true;
-        dialogueScript.CharacterArt.SetActive(false);
+        dialogueScript.CharacterArt.SetActive(true);
         dialogueScript.TextBox.SetActive(false);
         movementScript.enabled = false;
 
