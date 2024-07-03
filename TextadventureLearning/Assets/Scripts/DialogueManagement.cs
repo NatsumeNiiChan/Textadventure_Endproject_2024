@@ -19,6 +19,7 @@ public class DialogueManagement : MonoBehaviour
     [SerializeField] private bool isKatalusan;
     [SerializeField] private bool isDream;
     [SerializeField] private bool isLvl2;
+    [SerializeField] private bool isPaglikha;
 
     public GameObject CharacterArt;
     public GameObject TextBox;
@@ -56,7 +57,7 @@ public class DialogueManagement : MonoBehaviour
 
     private void Update()
     {
-        if (questScript.HayopQuestCount >= 7)
+        if (questScript.HayopQuestCount >= 7 && isDream == true)
         {
             TextOne = false;
             TextTwo = true;
@@ -262,7 +263,7 @@ public class DialogueManagement : MonoBehaviour
                     TextTwo = true;
                     questScript.HasQuestStarted = true;
 
-                    if (questScript.LevelTwo == true)
+                    if (questScript.LevelTwo == true && isPaglikha == false)
                     {
                         TextOne = true;
                         TextTwo = false;

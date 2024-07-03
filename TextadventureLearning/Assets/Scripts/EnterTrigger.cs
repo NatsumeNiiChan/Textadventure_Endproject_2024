@@ -19,6 +19,7 @@ public class EnterTrigger : MonoBehaviour
     private QuestionSetup questionScript;
     private StandardMovement movementScript;
     private QuestHandler questScript;
+    private PickUp pickUpScript;
 
     private void Awake()
     {
@@ -46,6 +47,8 @@ public class EnterTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //uiObject.SetActive(true);
+        pickUpScript = collision.gameObject.GetComponent<PickUp>();
+        pickUpScript.IsPickable = true;
         questionScript.TriggerScript = gameObject.GetComponent<EnterTrigger>();
         
         questionScript.GetQuestionAssets();

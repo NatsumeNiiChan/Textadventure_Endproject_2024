@@ -44,6 +44,9 @@ public class PickUp : MonoBehaviour
             if (isDrum == true)
             {
                 taskMScript.DrumCount++;
+                sound.clip = clip;
+                sound.Play();
+                Destroy(gameObject);
             }
 
             sound.clip = clip;
